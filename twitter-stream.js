@@ -36,6 +36,11 @@ mongoose.connect(
           const {
             text,
             created_at,
+            retweet_count,
+            reply_count,
+            quote_count,
+            favorite_count,
+            user,
             place: { country, full_name, place_type }
           } = event;
 
@@ -63,6 +68,11 @@ mongoose.connect(
             hour,
             minute,
             day,
+            retweetCount: parseInt(retweet_count, 10),
+            replyCount: parseInt(reply_count, 10),
+            quoteCount: parseInt(quote_count, 10),
+            favoriteCount: parseInt(favorite_count, 10),
+            user,
             hourAndMinute: `${hour}:${minute}`
           };
 

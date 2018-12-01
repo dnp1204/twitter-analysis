@@ -12,9 +12,14 @@ const tweetSchema = new Schema({
   hour: String,
   minute: String,
   hourAndMinute: String,
-  day: String
+  day: String,
+  retweetCount: Number,
+  replyCount: Number,
+  quoteCount: Number,
+  favoriteCount: Number,
+  user: Object
 });
 
-const Tweet = mongoose.model('tweets', tweetSchema);
+const Tweet = mongoose.model('tweets-2', tweetSchema);
 
 module.exports = Tweet;
