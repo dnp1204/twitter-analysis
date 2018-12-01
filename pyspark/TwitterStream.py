@@ -41,7 +41,7 @@ def connect_to_twitter(connection):
     auth.set_access_token(access_token, access_token_secret)
 
     twitter_stream = Stream(auth, TweetsListener(connection))
-    twitter_stream.filter(track=["#"])
+    twitter_stream.filter(track=["#"], languages=["en"])
 
 
 if __name__ == "__main__":
