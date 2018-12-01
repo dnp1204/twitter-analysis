@@ -43,11 +43,16 @@ mongoose.connect(
           const day = time[0];
           const [hour, minute] = time[3].split(':');
 
-          const hashtags = text.split(' ').filter(word => {
-            if (word.startsWith('#') && word.length > 1) {
-              return word.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, '');
-            }
-          });
+          const hashtags = text
+            .split(' ')
+            .filter(word => {
+              if (word.startsWith('#') && word.length > 1) {
+                return word;
+              }
+            })
+            .map(word => {
+              return word.toLowerCase().replace(/[^a-zA-Z0-9# ]/g, '');
+            });
           const emojis = onlyEmoji(text);
           const data = {
             text,

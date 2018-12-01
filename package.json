@@ -11,6 +11,7 @@
     "collect-tweets": "node twitter-stream.js"
   },
   "dependencies": {
+    "bluebird": "^3.5.3",
     "body-parser": "^1.18.3",
     "concurrently": "^4.1.0",
     "emoji-aware": "^3.0.4",

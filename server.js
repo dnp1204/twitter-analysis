@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const keys = require('./keys');
 
 const Word = require('./models/Word');
+const FilteredWord = require('./models/FilteredWord');
 const Hashtag = require('./models/Hashtag');
 const Location = require('./models/Location');
 const Emoji = require('./models/Emoji');
@@ -28,6 +29,15 @@ app.use(bodyParser.json());
 app.get('/api/words/count', async (req, res) => {
   const { limit } = req.params;
   const data = await Word.find({})
+    .sort({ count: -1 })
+    .limit(limit || 10);
+
+  res.send({ words: data });
+});
+
+app.get('/api/filtered_words/count', async (req, res) => {
+  const { limit } = req.params;
+  const data = await FilteredWord.find({})
     .sort({ count: -1 })
     .limit(limit || 10);
 
