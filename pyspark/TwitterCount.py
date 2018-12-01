@@ -17,7 +17,7 @@ def read_tweets(spark):
 
 
 def save_to_mongodb(result, collection_name):
-    print('Saving result ' + collection_name + ' to database...\n')
+    print('Saving ' + collection_name + ' result to database...\n')
     result.write.format("com.mongodb.spark.sql") \
         .option("spark.mongodb.output.uri", "mongodb://127.0.0.1/twitter." + collection_name) \
         .mode("overwrite") \
