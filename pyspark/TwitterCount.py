@@ -220,8 +220,15 @@ def find_popular_words_remove_stopwords(df):
         'will',
         'get',
         'got',
-        'really'
+        'really',
+        'like',
+        'can',
+        'go',
+        'see',
+        'good',
+        'great'
     ]
+
     tokenizer = Tokenizer(inputCol="text", outputCol="raw_tokens")
     remover = StopWordsRemover(
         inputCol="raw_tokens", outputCol="filtered", stopWords=stopWords)
@@ -230,10 +237,10 @@ def find_popular_words_remove_stopwords(df):
     removed = remover.transform(tokenized)
 
     removed.select(f.explode(f.col('filtered')).alias('word')) \
-        .createTempView("words")
+        .createTempView("important_words")
 
     result = spark \
-        .sql("SELECT * from words WHERE word LIKE '_%' AND word NOT LIKE '%#%' AND word NOT LIKE '%@%' AND word NOT LIKE '%&%' AND word NOT LIKE '%-%'") \
+        .sql("SELECT * from important_words WHERE word LIKE '_%' AND word NOT LIKE '%#%' AND word NOT LIKE '%@%' AND word NOT LIKE '%&%' AND word NOT LIKE '%-%'") \
         .groupBy('word') \
         .count() \
         .sort('count', ascending=False)

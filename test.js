@@ -17,7 +17,9 @@ mongoose.connect(
           hashtags: { $exists: true },
           $where: 'this.hashtags.length>0'
         });
-        updateHashtags(data);
+        updateHashtags(data).then(() => {
+          console.log('finished');
+        });
       })();
     }
   }
