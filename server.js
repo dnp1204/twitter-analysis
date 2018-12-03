@@ -78,5 +78,5 @@ app.get('/api/times/count', async (req, res) => {
 });
 
 app.listen(process.env.PORT || 5000, () => {
-  console.log(`Server is on ${process.env.PORT || 5000}`);
+  console.log(`Server is on ${process.env.PORT || 8080}`);
 });
