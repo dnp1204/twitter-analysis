@@ -11,6 +11,7 @@ const Location = require('./models/Location');
 const Emoji = require('./models/Emoji');
 const Time = require('./models/Time');
 const Average = require('./models/Average');
+const HourHashtag = require('./models/HourHashtag');
 
 const app = express();
 
@@ -82,6 +83,17 @@ app.get('/api/average/count', async (req, res) => {
   const data = await Average.find({});
 
   res.send({ average: data });
+});
+
+app.get('/api/hourhashtag/count/:hour', async (req, res) => {
+  const { hour, limit } = req.params;
+  const hourQuery = hour && hour < 10 ? `0${hour}` : `${hour}`;
+
+  const data = await HourHashtag.find({ hour: hourQuery || '01' })
+    .limit(limit || 10)
+    .sort({ count: -1 });
+
+  res.send({ hashtags: data });
 });
 
 app.listen(process.env.PORT || 8080, () => {
