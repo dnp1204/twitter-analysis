@@ -312,6 +312,38 @@ def find_popular_hashtags(df):
     return hashtags
 
 
+def union_all(dfs):
+    if len(dfs) > 1:
+        return dfs[0].unionAll(union_all(dfs[1:]))
+    else:
+        return dfs[0]
+
+
+def find_popular_hashtags_by_hour(df):
+    df.createTempView("hashtags")
+    dfs = []
+
+    for index in range(1, 24):
+        hour = index
+        if (index < 10):
+            hour = '0' + str(index)
+        query = (
+            "SELECT hashtags, hour from hashtags WHERE hour LIKE '{}'").format(hour)
+        result = spark.sql(query) \
+            .select(f.explode(f.col('hashtags')).alias('hashtag')) \
+            .groupBy('hashtag') \
+            .count() \
+            .sort('count', ascending=False)
+
+        result = result.withColumn("hour", f.lit(str(hour)))
+        dfs.append(result)
+
+        result.show()
+
+    td = union_all(dfs)
+    save_to_mongodb(td, 'hour_hashtags')
+
+
 def find_average(avg_dfs):
     temps = []
 
@@ -368,3 +400,4 @@ if __name__ == "__main__":
     ]
 
     find_average(avg_dfs)
+    find_popular_hashtags_by_hour(df)
