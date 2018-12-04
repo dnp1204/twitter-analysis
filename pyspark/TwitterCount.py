@@ -226,7 +226,12 @@ def find_popular_words_remove_stopwords(df):
         'go',
         'see',
         'good',
-        'great'
+        'great',
+        'want',
+        'know',
+        'now',
+        'one',
+        'two'
     ]
 
     tokenizer = Tokenizer(inputCol="text", outputCol="raw_tokens")
@@ -328,7 +333,7 @@ def find_average(avg_dfs):
         result = result.drop("row_index")
         result.show()
 
-        save_to_mongodb(result, "average")
+        save_to_mongodb(result, "average_counts")
 
         return result
 

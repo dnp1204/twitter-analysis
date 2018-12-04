@@ -10,6 +10,7 @@ const Hashtag = require('./models/Hashtag');
 const Location = require('./models/Location');
 const Emoji = require('./models/Emoji');
 const Time = require('./models/Time');
+const Average = require('./models/Average');
 
 const app = express();
 
@@ -75,6 +76,12 @@ app.get('/api/times/count', async (req, res) => {
   const data = await Time.find({}).sort({ hour: 1, minute: 1 });
 
   res.send({ times: data });
+});
+
+app.get('/api/average/count', async (req, res) => {
+  const data = await Average.find({});
+
+  res.send({ average: data });
 });
 
 app.listen(process.env.PORT || 8080, () => {
